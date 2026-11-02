@@ -1,0 +1,363 @@
+@import "tailwindcss";
+
+/* Futura Medium — H1, TEXT, TEXT2 */
+@font-face {
+  font-family: "Futura Medium";
+  src: url("/fonts/FUTURAM.TTF") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Futura Condensed ExtraBold — H2 */
+@font-face {
+  font-family: "Futura Condensed ExtraBold";
+  src: url("/fonts/FUTURXKC.TTF") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root,
+:host {
+  --font-sans:
+    "Futura Medium", Futura, "Helvetica Neue", Helvetica, Arial,
+    ui-sans-serif, sans-serif;
+
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+
+  --color-red-600: oklch(57.7% 0.245 27.325);
+  /* Brand active / click — also drives Tailwind amber-500 utilities */
+  --color-amber-500: #f97613;
+
+  --color-slate-200: oklch(92.9% 0.013 255.508);
+  --color-slate-400: oklch(70.4% 0.04 256.788);
+
+  --color-gray-200: oklch(92.8% 0.006 264.531);
+  --color-gray-300: oklch(87.2% 0.01 258.338);
+  --color-gray-400: oklch(70.7% 0.022 261.325);
+
+  --color-white: #fff;
+  --color-black: var(--color-standard-grey);
+
+  /* Brand palette */
+  --color-standard-grey: #666666;
+  --color-active: #f97613;
+  --color-hover-frame: #666666;
+
+  --spacing: 0.25rem;
+
+  --breakpoint-xl: 80rem;
+
+  --container-xs: 20rem;
+  --container-sm: 24rem;
+  --container-md: 28rem;
+  --container-4xl: 56rem;
+  --container-5xl: 64rem;
+
+  --text-xs: 0.7em;
+  --text-xs--line-height: calc(1 / 0.75);
+
+  --text-sm: 0.8em;
+  --text-sm--line-height: calc(1.25 / 0.875);
+
+  --text-base: 1rem;
+  --text-base--line-height: 1.4;
+
+  --text-md: 1.1em;
+
+  --text-lg: 1.125rem;
+  --text-lg--line-height: calc(1.75 / 1.125);
+
+  --text-xl: 1.25rem;
+  --text-xl--line-height: calc(1.75 / 1.25);
+
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: calc(2 / 1.5);
+
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  /* Design char spacing -30 → -0.03em */
+  --tracking-brand: -0.03em;
+  --tracking-widest: 0.1em;
+
+  --leading-snug: 1.375;
+
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --animate-spin: spin 1s linear infinite;
+
+  --default-transition-duration: 0.15s;
+  --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --default-font-family: var(--font-sans);
+  --default-mono-font-family: var(--font-mono);
+
+  --background-image-selector-icon: url("https://cdn.shopify.com/oxygen-v2/28323/14370/29622/3611511/assets/selector-icon-DUvmi7W5.svg");
+
+  --color-tri-ferg-blue: #34398d;
+  --color-tri-ferg-grey: #e6e6e6;
+  --color-tri-ferg-lime-green: #b5ff00;
+  --color-tri-ferg-red: #cd1417;
+  --color-text-grey: #d1d5db;
+}
+
+@theme {
+  --font-sans:
+    "Futura Medium", Futura, "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+
+  --font-header:
+    "Futura Condensed ExtraBold", "Futura Condensed", "Helvetica Neue",
+    Helvetica, Arial, sans-serif;
+
+  --font-body:
+    "Futura Medium", Futura, "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+
+  --color-tri-ferg-blue: #34398d;
+  --color-tri-ferg-grey: #e6e6e6;
+  --color-tri-ferg-lime-green: #b5ff00;
+  --color-tri-ferg-red: #cd1417;
+
+  --color-standard-grey: #666666;
+  --color-black: var(--color-standard-grey);
+  --color-active: #f97613;
+  --color-hover-frame: #666666;
+  --color-amber-500: #f97613;
+
+  --tracking-brand: -0.03em;
+
+  --max-width-352: 88rem;
+  --max-width-150: 37.5rem;
+  --spacing-6.25: 1.5625rem;
+  --leading-4.5: 1.125rem;
+}
+
+/* Dark utilities only apply with .dark on an ancestor — not OS prefers-color-scheme */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@plugin "@tailwindcss/container-queries";
+@plugin "@tailwindcss/typography";
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  * {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  html,
+  body {
+    font-family: var(--font-body);
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: var(--tracking-brand);
+    font-synthesis: none;
+    background: var(--color-white);
+    color: var(--color-standard-grey);
+  }
+
+  /* H1 / TEXT / TEXT2 — Futura Medium, tracking -30 */
+  h1,
+  .type-h1,
+  p,
+  .type-text,
+  .type-text2,
+  label,
+  input,
+  textarea,
+  select {
+    font-family: var(--font-body);
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: var(--tracking-brand);
+    font-synthesis: none;
+    color: var(--color-standard-grey);
+  }
+
+  /* TEXT2 — small letters */
+  .type-text2 {
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+  }
+
+  /* H2 — Futura Condensed ExtraBold, tracking -30 */
+  h2,
+  .type-h2 {
+    font-family: var(--font-header);
+    font-style: normal;
+    font-weight: 800;
+    letter-spacing: var(--tracking-brand);
+    font-synthesis: none;
+    color: var(--color-standard-grey);
+  }
+}
+
+@layer components {
+  #grid {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #grid > a {
+    display: block;
+    min-width: 0;
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    #grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    #grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+  }
+
+  .header-main-nav {
+    margin-left: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+
+  @media (max-width: 767px) {
+    .header-main-nav {
+      visibility: hidden;
+      display: none;
+    }
+  }
+
+  .header-nav-item {
+    margin: 0;
+    margin-left: 1.25rem;
+    margin-top: 0.875rem;
+    font-family: var(--font-header);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: var(--tracking-brand);
+    color: var(--color-standard-grey);
+    white-space: nowrap;
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    transition: color 150ms ease-in-out;
+  }
+
+  .header-nav-item a {
+    color: inherit;
+    text-decoration: none;
+    font: inherit;
+    letter-spacing: inherit;
+    outline: 2pt solid transparent;
+    outline-offset: 3px;
+    transition:
+      color 150ms ease-in-out,
+      outline-color 150ms ease-in-out;
+  }
+
+  .header-nav-item a:hover {
+    outline-color: var(--color-hover-frame);
+  }
+
+  .header-nav-item a:active,
+  .header-nav-item[data-active="true"] a {
+    color: var(--color-active);
+    outline-color: transparent;
+  }
+
+  #mobile-menu a {
+    font-family: var(--font-header);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: var(--tracking-brand);
+    color: var(--color-standard-grey);
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    text-decoration: none;
+    outline: 2pt solid transparent;
+    outline-offset: 3px;
+    transition:
+      color 150ms ease-in-out,
+      outline-color 150ms ease-in-out;
+  }
+
+  #mobile-menu a:hover {
+    outline-color: var(--color-hover-frame);
+  }
+
+  #mobile-menu a:active,
+  #mobile-menu a[data-active="true"] {
+    color: var(--color-active);
+    outline-color: transparent;
+  }
+
+  /* Primary buttons — grey fill, hover 2pt #666 frame, click #F97613 */
+  .btn-brand {
+    font-family: var(--font-header);
+    font-style: normal;
+    font-weight: 800;
+    letter-spacing: var(--tracking-brand);
+    font-synthesis: none;
+    border: 2pt solid var(--color-standard-grey);
+    background: var(--color-standard-grey);
+    color: #fff;
+    transition:
+      background-color 150ms ease-in-out,
+      color 150ms ease-in-out,
+      border-color 150ms ease-in-out;
+  }
+
+  .btn-brand:hover {
+    border-color: var(--color-hover-frame);
+    background: #fff;
+    color: var(--color-standard-grey);
+  }
+
+  .btn-brand:active {
+    border-color: var(--color-active);
+    background: var(--color-active);
+    color: #fff;
+  }
+}
+
+@supports (font: -apple-system-body) and (-webkit-appearance: none) {
+  img[loading="lazy"] {
+    clip-path: inset(0.6px);
+  }
+}
+
+a,
+input,
+button {
+  @apply focus-visible:outline-hidden
+    focus-visible:ring-2
+    focus-visible:ring-neutral-400
+    focus-visible:ring-offset-2
+    focus-visible:ring-offset-neutral-50;
+}

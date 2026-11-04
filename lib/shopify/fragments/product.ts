@@ -79,6 +79,12 @@ const productFragment = /* GraphQL */ `
     ) {
       value
     }
+    infoLink: metafield(namespace: "custom", key: "info_link") {
+      value
+    }
+    infoLinkLabel: metafield(namespace: "custom", key: "info_link_label") {
+      value
+    }
     sellingPlanGroups(first: 1) {
       edges {
         node {

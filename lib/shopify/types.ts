@@ -199,6 +199,10 @@ export type ShopifyProduct = {
   sizeChart?: ProductMetafield;
   recommendations?: ProductMetafield;
   supplierInformation?: ProductMetafield;
+  /** Destination for the Product Details info link (URL or path). */
+  infoLink?: ProductMetafield;
+  /** Optional link label; defaults from the destination when unset. */
+  infoLinkLabel?: ProductMetafield;
   sellingPlanGroups?: Connection<{
     name: string;
     sellingPlans: Connection<SellingPlan>;

@@ -1,6 +1,12 @@
 import { sanitizeRichHtml } from "lib/html/sanitize-rich-html";
 import { parseProductDescriptionLines } from "lib/store/parse-product-description";
 
+export type ParsedInfoLink = {
+  href: string;
+  label: string;
+  external: boolean;
+};
+
 export type SizeChartMeasurement = {
   name: string;
   measures: string[];
@@ -37,6 +43,58 @@ function splitBulletText(text: string): string[] {
     .split(/\s*•\s*|\n+/)
     .map((line) => line.trim())
     .filter(Boolean);
+}
+
+function defaultInfoLinkLabel(href: string): string {
+  if (/coffee-inf-recipes/i.test(href)) {
+    return "View Coffee Info";
+  }
+
+  return "View Product Info";
+}
+
+/**
+ * Product Details CTA from Shopify metafields `custom.info_link` (+ optional
+ * `custom.info_link_label`). Accepts site paths
+ * (`/coffee-inf-recipes/volcan-azul`, `/product/coffee-grinder`), bare coffee-info
+ * slugs (`volcan-azul`), or absolute URLs.
+ */
+export function parseInfoLink(
+  url: string | null | undefined,
+  label?: string | null | undefined,
+): ParsedInfoLink | null {
+  const trimmed = url?.trim();
+  if (!trimmed) return null;
+
+  let href: string;
+  let external = false;
+
+  if (/^https?:\/\//i.test(trimmed)) {
+    try {
+      // Validate absolute URL shape.
+      new URL(trimmed);
+    } catch {
+      return null;
+    }
+    href = trimmed;
+    external = true;
+  } else if (trimmed.startsWith("/")) {
+    href = trimmed;
+  } else if (
+    trimmed.startsWith("coffee-inf-recipes") ||
+    trimmed.startsWith("product/")
+  ) {
+    href = `/${trimmed}`;
+  } else {
+    // Treat bare slugs as coffee-info farm pages (primary coffee use case).
+    href = `/coffee-inf-recipes/${trimmed.replace(/^\/+/, "")}`;
+  }
+
+  return {
+    href,
+    label: label?.trim() || defaultInfoLinkLabel(href),
+    external,
+  };
 }
 
 export function parseTechnicalDetails(

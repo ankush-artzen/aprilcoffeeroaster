@@ -11,10 +11,10 @@ import { useEffect, useState } from "react";
 import Footer from "../layout/footer";
 
 export type {
-  ProductPageClientProps,
-  ProductPageImage,
-  ProductPageRelated,
-  ProductPageVariant,
+    ProductPageClientProps,
+    ProductPageImage,
+    ProductPageRelated,
+    ProductPageVariant
 } from "components/store/product/product-page-types";
 
 export default function ProductPageClient({
@@ -25,6 +25,7 @@ export default function ProductPageClient({
   sizeChart,
   recommendations,
   supplierInformation,
+  infoLink,
   images,
   variants,
 }: ProductPageClientProps) {
@@ -135,6 +136,7 @@ export default function ProductPageClient({
                 sizeChart={sizeChart}
                 recommendations={recommendations}
                 supplierInformation={supplierInformation}
+                infoLink={infoLink}
                 variants={variants}
                 selectedVariantId={selectedVariantId}
                 selectedVariant={selectedVariant}

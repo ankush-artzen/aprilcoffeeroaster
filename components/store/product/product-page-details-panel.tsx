@@ -10,14 +10,16 @@ import TastingMenuBooking from "components/store/product/tasting-menu-booking";
 import { TASTING_MENU_HANDLE } from "lib/constants";
 import type { Product } from "lib/shopify/types";
 import type {
-  ParsedRecipeContent,
-  ParsedSizeChart,
-  ParsedTechnicalDetails,
+    ParsedInfoLink,
+    ParsedRecipeContent,
+    ParsedSizeChart,
+    ParsedTechnicalDetails,
 } from "lib/store/parse-product-metafields";
 import {
-  getSubscriptionGroupName,
-  getSubscriptionPlans,
+    getSubscriptionGroupName,
+    getSubscriptionPlans,
 } from "lib/store/subscription-plans";
+import Link from "next/link";
 import { useState } from "react";
 
 type ProductPageDetailsPanelProps = {
@@ -28,6 +30,7 @@ type ProductPageDetailsPanelProps = {
   sizeChart: ParsedSizeChart | null;
   recommendations: ParsedRecipeContent | null;
   supplierInformation: ParsedRecipeContent | null;
+  infoLink: ParsedInfoLink | null;
   variants: ProductPageVariant[];
   selectedVariantId: string;
   selectedVariant: ProductPageVariant | undefined;
@@ -86,6 +89,7 @@ export default function ProductPageDetailsPanel({
   sizeChart,
   recommendations,
   supplierInformation,
+  infoLink,
   variants,
   selectedVariantId,
   selectedVariant,
@@ -109,6 +113,8 @@ export default function ProductPageDetailsPanel({
   const selectedProductVariant = product.variants.find(
     (variant) => variant.id === selectedVariantId,
   );
+  const showProductDetails =
+    descriptionLines.length > 0 || Boolean(infoLink);
 
   return (
     <div
@@ -132,7 +138,7 @@ export default function ProductPageDetailsPanel({
 
       <div className="mt-6 w-full max-md:order-2">
         {/* Product Details — product description/content */}
-        {descriptionLines.length > 0 ? (
+        {showProductDetails ? (
           <>
             <button
               type="button"
@@ -183,6 +189,30 @@ export default function ProductPageDetailsPanel({
 
                     return <p key={line}>{line}</p>;
                   })}
+
+                  {infoLink ? (
+                    <p className={descriptionLines.length > 0 ? "pt-3" : undefined}>
+                      {infoLink.external ? (
+                        <a
+                          href={infoLink.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline underline-offset-2 hover:no-underline"
+                        >
+                          {infoLink.label}
+                          <span aria-hidden="true"> →</span>
+                        </a>
+                      ) : (
+                        <Link
+                          href={infoLink.href}
+                          className="underline underline-offset-2 hover:no-underline"
+                        >
+                          {infoLink.label}
+                          <span aria-hidden="true"> →</span>
+                        </Link>
+                      )}
+                    </p>
+                  ) : null}
                 </div>
               </div>
             ) : null}

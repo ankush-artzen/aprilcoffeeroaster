@@ -1,8 +1,9 @@
 import type { Product } from "lib/shopify/types";
 import type {
-  ParsedRecipeContent,
-  ParsedSizeChart,
-  ParsedTechnicalDetails,
+    ParsedInfoLink,
+    ParsedRecipeContent,
+    ParsedSizeChart,
+    ParsedTechnicalDetails,
 } from "lib/store/parse-product-metafields";
 
 export type ProductPageImage = {
@@ -36,6 +37,8 @@ export type ProductPageClientProps = {
   sizeChart: ParsedSizeChart | null;
   recommendations: ParsedRecipeContent | null;
   supplierInformation: ParsedRecipeContent | null;
+  /** Optional Product Details CTA (coffee info / equipment page). */
+  infoLink: ParsedInfoLink | null;
   images: ProductPageImage[];
   variants: ProductPageVariant[];
   relatedProducts: ProductPageRelated[];

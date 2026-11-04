@@ -9,6 +9,7 @@ import { shopifyImageUrl } from "lib/shopify-image-url";
 import type { Product, ProductVariant } from "lib/shopify/types";
 import { parseProductDescriptionLines } from "lib/store/parse-product-description";
 import {
+    parseInfoLink,
     parseRecipeContent,
     parseSizeChart,
     parseTechnicalDetails,
@@ -109,6 +110,10 @@ export function mapProductPageData(
     sizeChart: parseSizeChart(product.sizeChart?.value),
     recommendations,
     supplierInformation: parseRecipeContent(product.supplierInformation?.value),
+    infoLink: parseInfoLink(
+      product.infoLink?.value,
+      product.infoLinkLabel?.value,
+    ),
     images,
     variants,
     relatedProducts,
